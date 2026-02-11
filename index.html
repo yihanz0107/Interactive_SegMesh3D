@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interactive SegMesh3</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <main class="content">
+        <section class="viewport">
+          <canvas id="c"></canvas>
+        </section>
+
+        <aside class="panel">
+          <div class="toolbar">
+            <div class="title">Interactive SegMesh3</div>
+            <label class="btn full">
+              Import File (Multi-file supported)
+              <input id="fileInput" type="file" multiple />
+            </label>
+          </div>
+
+          <div class="panel-section">
+            <div class="panel-title">camera</div>
+            <div id="cameraParams" class="info">
+              <div><strong>extrisic (4x4):</strong><pre id="extrinsicMatrix"></pre></div>
+              <div><strong>intrinsic:</strong><pre id="intrinsicMatrix"></pre></div>
+            </div>
+          </div>
+
+          <div class="panel-section">
+            <div class="panel-title">Selected Object</div>
+            <div id="selectedInfo" class="info">None</div>
+          </div>
+
+          <div class="panel-section">
+            <div class="panel-title">Transformation</div>
+            <div class="row">
+              <button id="btnTranslate" class="btn small">Translate (W)</button>
+              <button id="btnRotate" class="btn small">Rotate (E)</button>
+              <button id="btnScale" class="btn small">Scale (R)</button>
+              <button id="btnFrame" class="btn small">Focus on Selected</button>
+            </div>
+            <div class="row">
+              <button id="btnDuplicate" class="btn small">Duplicate (Ctrl+D)</button>
+              <button id="btnDelete" class="btn small danger">Delete (Del)</button>
+            </div>
+            <div class="row">
+              
+              <button id="btnReset" class="btn small">Reset Selected Transformation</button>
+            </div>
+          </div>
+
+          <div class="panel-section">
+            <div class="panel-title">Backend Log</div>
+            <pre id="backendLog" class="log">(Empty)</pre>
+          </div>
+
+          <div class="panel-section">
+            <div class="panel-title">Scene</div>
+            <div class="row">
+              <label class="checkbox">
+                <input id="chkGrid" type="checkbox" checked />
+                Show Grid Lines
+              </label>
+            </div>
+            <div class="row">
+              <label class="checkbox">
+                <input id="chkWire" type="checkbox" />
+                Wireframe View (Selected Objects Only)
+              </label>
+            </div>
+          </div>
+
+          <div class="panel-section">
+            <div class="panel-title">Object List</div>
+            <div id="meshList" class="list"></div>
+          </div>
+
+          <div class="panel-section">
+            <div class="panel-title">Segmentation (Sessions)</div>
+            <div class="row">
+               <button id="btnUseViewpoint" class="btn small">Seg current view</button>
+            </div>
+            <button id="btnMultiViewMerge" class="btn small primary">Merge to 3D</button>
+              <label class="checkbox">
+                <input id="chkUseHolopart" type="checkbox" />
+                Use Holopart
+              </label>
+            <div id="sceneList" class="list"></div>
+          </div>
+
+        </aside>
+
+      </main>
+    </div>
+
+
+    <div id="popup" class="popup">
+      <div class="popup-content">
+        <button id="closePopup">X</button>
+        <div class="canvas-wrapper" style="position: relative; width: 512px; height: 512px; background: #000;">
+  
+  <img id="segBaseImage" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; z-index: 1;" />
+  
+  <canvas id="segCanvas" width="512" height="512" style="position: absolute; top: 0; left: 0; z-index: 2;"></canvas>
+
+</div>
+        <div>
+          <button id="btnPos" class="btn small">Pos (+)</button>
+          <button id="btnNeg" class="btn small">Neg (-)</button>
+          <button id="btnRemove" class="btn small">Remove</button>
+          <button id="btnConfirm" class="btn small">Confirm</button>
+        </div>
+        <label class="checkbox-label" style="margin-left: 10px; display: inline-flex; align-items: center;">
+          <input type="checkbox" id="chkUseNormal"> 
+          <span style="margin-left: 4px;">Use Normal</span>
+        </label>
+        <div>
+          <pre id="coordinatesDisplay">Click: </pre>
+        </div>
+      </div>
+    </div>
+
+
+<script type="module">
+  import { initializePopup } from './popup.js';  // Import the popup module
+
+  const BACKEND = "http://127.0.0.1:8000"; // Example backend URL
+
+  // Initialize the popup functionality
+  const { showPopup } = initializePopup({
+    BACKEND, 
+    canvasId: "segCanvas", 
+    popupId: "popup", 
+    btnPosId: "btnPos", 
+    btnNegId: "btnNeg", 
+    btnRemoveId: "btnRemove", 
+    btnConfirmId: "btnConfirm", 
+    coordinatesDisplayId: "coordinatesDisplay"
+  });
+
+  // Button for triggering the segmentation using the current viewpoint
+  const btnUseViewpoint = document.getElementById("btnUseViewpoint");
+
+  // Example of how you might trigger the popup when the user wants to use the viewpoint for segmentation
+  btnUseViewpoint.addEventListener("click", () => {
+    console.log('Use Viewpoint Button Clicked');  // Check if the event is triggered
+    // Assuming `selected_view` is the current camera view matrix or a similar object
+    const imageUrl = 'path-to-your-image.jpg';  // Replace with actual image URL
+    showPopup(imageUrl);  // Display the popup with the image for segmentation
+  });
+</script>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

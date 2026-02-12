@@ -127,12 +127,12 @@ def extract_original_parts(
     
     for i, (name, part_mesh) in enumerate(parts_mesh.geometry.items()):
         mesh_copy = part_mesh.copy()
-        mesh_copy = enforce_clean_boundary_cut(
-        mesh_copy, 
-        iterations=50, 
-        strength=0.9, 
-        close_hole=True # Watertight
-    )
+    #     mesh_copy = enforce_clean_boundary_cut(
+    #     mesh_copy, 
+    #     iterations=50, 
+    #     strength=0.9, 
+    #     close_hole=True # Watertight
+    # )
         
         mesh_copy.metadata['name'] = name
         

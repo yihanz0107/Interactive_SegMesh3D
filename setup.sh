@@ -52,6 +52,19 @@ else
 fi
 
 #######################################
+# Flatten SAM3 directory structure
+#######################################
+if [ -d "./sam3/sam3" ]; then
+  echo ">>> Flattening SAM3 directory structure (sam3/sam3 -> sam3/)"
+
+  # Copy all contents (including hidden files) from sam3/sam3 to sam3
+  cp -r ./sam3/sam3/. ./sam3/
+
+  echo ">>> SAM3 directory flattened."
+else
+  echo ">>> No nested sam3/sam3 directory found, skipping flatten."
+fi
+#######################################
 # Node.js / npm (via nvm)
 #######################################
 echo ">>> Installing nvm (Node Version Manager)"

@@ -21,19 +21,61 @@ source "$(conda info --base)/etc/profile.d/conda.sh"
 conda activate ${ENV_NAME}
 
 #######################################
-# Python / PyTorch
+# Auto-detect CUDA wheel tag from NVIDIA driver
 #######################################
-echo ">>> Upgrading pip"
-pip install --upgrade pip
+if ! command -v nvidia-smi >/dev/null 2>&1; then
+  echo "ERROR: nvidia-smi not found. NVIDIA driver not installed."
+  exit 1
+fi
 
-echo ">>> Installing PyTorch (CUDA 13.0)"
-pip install --index-url https://download.pytorch.org/whl/cu130 \
-  torch==2.9.1+cu130 \
-  torchvision==0.24.1+cu130
+# Example parsed value: 13.1
+CUDA_MAX="$(nvidia-smi | sed -n 's/.*CUDA Version: \([0-9]\+\.[0-9]\+\).*/\1/p' | head -n1)"
 
-echo ">>> Installing PyTorch3D"
-pip install --extra-index-url https://miropsota.github.io/torch_packages_builder \
-  pytorch3d==0.7.9+pt2.9.1cu130
+if [ -z "${CUDA_MAX}" ]; then
+  echo "ERROR: Failed to parse CUDA version from nvidia-smi."
+  exit 1
+fi
+
+echo ">>> Detected driver-supported CUDA version: ${CUDA_MAX}"
+
+# Split major.minor
+CUDA_MAJOR="${CUDA_MAX%%.*}"
+CUDA_MINOR="${CUDA_MAX#*.}"
+
+CUDA_VERSION=""
+
+if [ "${CUDA_MAJOR}" -ge 13 ]; then
+  CUDA_VERSION="130"
+elif [ "${CUDA_MAJOR}" -eq 12 ] && [ "${CUDA_MINOR}" -ge 8 ]; then
+  CUDA_VERSION="128"
+elif [ "${CUDA_MAJOR}" -eq 12 ] && [ "${CUDA_MINOR}" -ge 6 ]; then
+  CUDA_VERSION="126"
+else
+  echo "ERROR: Driver CUDA version ${CUDA_MAX} is below 12.6."
+  echo "This setup supports cu126 / cu128 / cu130 only, please update your Nvidia Driver."
+  exit 1
+fi
+
+echo ">>> Selecting PyTorch wheels: cu${CUDA_VERSION}"
+
+#######################################
+# Python / PyTorch/ PyTorch3d
+#######################################
+TORCH_VERSION="2.9.1"
+TORCHVISION_VERSION="0.24.1"
+PYTORCH3D_VERSION="0.7.9"
+
+TORCH_INDEX_URL="https://download.pytorch.org/whl/cu${CUDA_VERSION}"
+PYTORCH3D_INDEX_URL="https://miropsota.github.io/torch_packages_builder"
+
+echo ">>> Installing PyTorch ${TORCH_VERSION} (cu${CUDA_VERSION})"
+pip install --index-url "${TORCH_INDEX_URL}" \
+  "torch==${TORCH_VERSION}+cu${CUDA_VERSION}" \
+  "torchvision==${TORCHVISION_VERSION}+cu${CUDA_VERSION}"
+
+echo ">>> Installing PyTorch3D ${PYTORCH3D_VERSION} (+pt${TORCH_VERSION}cu${CUDA_VERSION})"
+pip install --extra-index-url "${PYTORCH3D_INDEX_URL}" \
+  "pytorch3d==${PYTORCH3D_VERSION}+pt${TORCH_VERSION}cu${CUDA_VERSION}"
 
 echo ">>> Pin setuptools"
 pip install "setuptools<80"

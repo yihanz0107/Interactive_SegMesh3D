@@ -13,13 +13,15 @@ ENV/
 uploads/
 temp/
 tmp/
+node_modules/
+sam3/
 
 # ===== OS / editor noise =====
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
-
+package-lock.json
 # ===== Logs =====
 *.log
 

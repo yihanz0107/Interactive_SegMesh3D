@@ -1,0 +1,27 @@
+# ===== Python cache / bytecode =====
+__pycache__/
+*.py[cod]
+*$py.class
+
+# ===== Virtual environments =====
+.venv/
+venv/
+env/
+ENV/
+
+# ===== Local runtime temp directories =====
+uploads/
+temp/
+tmp/
+
+# ===== OS / editor noise =====
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ===== Logs =====
+*.log
+
+# ===== Jupyter =====
+.ipynb_checkpoints/

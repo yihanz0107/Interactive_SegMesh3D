@@ -1,23 +1,15 @@
-[build-system]
-requires = ["setuptools<80", "wheel"]
-build-backend = "setuptools.build_meta"
-
 [project]
-name = "segmesh3d"
+name = "interactive_segmesh3d"
 version = "0.1.0"
-description = "Interactive 3D mesh segmentation with SAM3 and PyTorch3D"
 requires-python = ">=3.12"
+description = "Interactive 3D mesh segmentation with SAM3 and PyTorch3D"
 
 authors = [
-    { name = "Your Name" }
+    { name = "Yihan Zhang" },
+    { name = "Ningyuan Tang" }
 ]
 
 dependencies = [
-    # -------- core ML --------
-    "torch==2.9.1",
-    "torchvision==0.24.1",
-    "pytorch3d==0.7.9",
-
     # -------- vision / geometry --------
     "opencv-python",
     "scikit-image",
@@ -52,5 +44,4 @@ dependencies = [
 ]
 
 [tool.setuptools]
-packages = ["segmesh3d"]
-
+py-modules = []

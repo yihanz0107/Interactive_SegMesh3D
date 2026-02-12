@@ -4,7 +4,7 @@ set -e
 #######################################
 # Config
 #######################################
-ENV_NAME="segmesh3d"
+ENV_NAME="interactive_segmesh3d"
 PYTHON_VERSION="3.12"
 NODE_VERSION="lts/*"
 SAM3_REPO="https://github.com/facebookresearch/sam3.git"
@@ -93,21 +93,43 @@ EOF
 #######################################
 # Check SAM3 checkpoint
 #######################################
-SAM3_CKPT_PATH="./sam3/sam3/models/sam3.pt"
+SAM3_CKPT_PATH="./sam3/models/sam3.pt"
+BOLD="\033[1m"
+GREEN="\033[32m"
+YELLOW="\033[33m"
+BLUE="\033[34m"
+RESET="\033[0m"
+
+SAM3_BPE_PATH="./sam3/assets/bpe_simple_vocab_16e6.txt.gz"
+
+if [ ! -f "${SAM3_BPE_PATH}" ]; then
+  echo ""
+  echo "⚠️  SAM3 BPE vocab not found:"
+  echo -e "    ${YELLOW}${BOLD}${SAM3_BPE_PATH}${RESET}"
+  echo ""
+  echo "👉 This file is required for SAM3 text/token processing."
+  echo "   Please make sure the SAM3 repository is fully initialized"
+  echo "   and that this file exists at the path above."
+  echo ""
+else
+  echo -e "${GREEN}${BOLD}✔ SAM3 BPE vocab found.${RESET}"
+fi
 
 if [ ! -f "${SAM3_CKPT_PATH}" ]; then
   echo ""
-  echo "⚠️  SAM3 checkpoint not found:"
-  echo "    ${SAM3_CKPT_PATH}"
-  echo ""
+  echo "⚠️  SAM3 checkpoint not found"
   echo "👉 You are one step away from running SAM3."
   echo "   Please download the checkpoint manually and place it at:"
-  echo "   ${SAM3_CKPT_PATH}"
+  echo -e "   ${YELLOW}${BOLD}${SAM3_CKPT_PATH}${RESET}"
   echo ""
   echo ""
 else
-    echo ">>> SAM3 checkpoint found."
-    echo ">>> Setup complete."
-    echo ">>> Activate env later with: conda activate ${ENV_NAME}"
-    echo ">>> Start dev server with: npm run dev"
+    echo -e "${GREEN}${BOLD}✔ SAM3 checkpoint found.${RESET}"
+    echo -e "${GREEN}${BOLD}✔ Setup complete.${RESET}"
+    echo -e "➜ Please activate the environment manually${RESET}"
+    echo -e "➜ Then start the dev server with${RESET}"
+        echo -e "    ${BOLD}conda activate segmesh3d${RESET}"
+    echo -e "    ${BOLD}npm run dev${RESET}"
+
 fi
+find . -maxdepth 1 -type d -name "*.egg-info" -exec rm -rf {} + >/dev/null 2>&1

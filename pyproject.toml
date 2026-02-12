@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools<80", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "segmesh3d"
+version = "0.1.0"
+description = "Interactive 3D mesh segmentation with SAM3 and PyTorch3D"
+requires-python = ">=3.12"
+
+authors = [
+    { name = "Your Name" }
+]
+
+dependencies = [
+    # -------- core ML --------
+    "torch==2.9.1",
+    "torchvision==0.24.1",
+    "pytorch3d==0.7.9",
+
+    # -------- vision / geometry --------
+    "opencv-python",
+    "scikit-image",
+    "trimesh==4.11.2",
+    "pycocotools==2.0.11",
+    "decord==0.6.0",
+
+    # -------- transformers / text (SAM3 deps) --------
+    "timm==1.0.24",
+    "huggingface_hub",
+    "ftfy",
+    "regex",
+    "iopath",
+    "typing_extensions==4.15.0",
+
+    # -------- math / utils --------
+    "einops==0.8.2",
+    "tqdm",
+    "networkx==3.6.1",
+    "psutil==7.2.2",
+
+    # -------- visualization --------
+    "matplotlib",
+    "imageio",
+    "plotly",
+
+    # -------- backend / api --------
+    "fastapi==0.128.8",
+    "pydantic==2.12.5",
+    "uvicorn==0.40.0",
+    "python-multipart==0.0.22",
+]
+
+[tool.setuptools]
+packages = ["segmesh3d"]
+

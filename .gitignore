@@ -15,7 +15,6 @@ temp/
 tmp/
 node_modules/
 sam3/
-asserts/
 
 # ===== OS / editor noise =====
 .DS_Store

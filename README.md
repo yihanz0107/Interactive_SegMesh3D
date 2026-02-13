@@ -5,7 +5,7 @@
 **Interactive SegMesh3D** is a web-based tool for interactive 3D mesh segmentation. It allows users to perform segmentation on 2D projections using clicks and text prompts, powered by **SAM 3** (Segment Anything Model 3). The system aggregates multi-view masks to segment the 3D mesh with high consistency.
 
 ## 🌟 Powered by SAM 3
-** We leverage the powerful video frame consistency capabilities of SAM 3.**
+**We leverage the powerful video frame consistency capabilities of SAM 3.**
 Instead of relying on independent frame segmentation, our system implements a novel "camera movement" workflow:
 
 1.  **Camera Interpolation:** We perform interpolation between the camera angles selected by the user.
@@ -45,7 +45,7 @@ npm run dev
 ```
 
 * Open the local URL provided in the terminal (http://localhost:5173/) in your web browser.
-Note: If your GPU is on a remote server, simply forward the port to your local machine to use the web interface.
+* Note: If your GPU is on a remote server, simply forward the port to your local machine to use the web interface.
 
 
 ## Future Work

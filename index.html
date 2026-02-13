@@ -22,34 +22,34 @@
             </label>
           </div>
 
-          <div class="panel-section">
+          <!-- <div class="panel-section">
             <div class="panel-title">camera</div>
             <div id="cameraParams" class="info">
               <div><strong>extrisic (4x4):</strong><pre id="extrinsicMatrix"></pre></div>
               <div><strong>intrinsic:</strong><pre id="intrinsicMatrix"></pre></div>
             </div>
-          </div>
-
+          </div> -->
+<!-- 
           <div class="panel-section">
             <div class="panel-title">Selected Object</div>
             <div id="selectedInfo" class="info">None</div>
-          </div>
+          </div> -->
 
           <div class="panel-section">
             <div class="panel-title">Transformation</div>
             <div class="row">
-              <button id="btnTranslate" class="btn small">Translate (W)</button>
+              <button id="btnTranslate" class="btn small">Move (W)</button>
               <button id="btnRotate" class="btn small">Rotate (E)</button>
               <button id="btnScale" class="btn small">Scale (R)</button>
-              <button id="btnFrame" class="btn small">Focus on Selected</button>
+              
             </div>
             <div class="row">
               <button id="btnDuplicate" class="btn small">Duplicate (Ctrl+D)</button>
               <button id="btnDelete" class="btn small danger">Delete (Del)</button>
             </div>
             <div class="row">
-              
-              <button id="btnReset" class="btn small">Reset Selected Transformation</button>
+              <button id="btnFrame" class="btn small">Focus on</button>
+              <button id="btnReset" class="btn small">Reset</button>
             </div>
           </div>
 
@@ -69,7 +69,7 @@
             <div class="row">
               <label class="checkbox">
                 <input id="chkWire" type="checkbox" />
-                Wireframe View (Selected Objects Only)
+                Wireframe View
               </label>
             </div>
           </div>
@@ -80,14 +80,15 @@
           </div>
 
           <div class="panel-section">
-            <div class="panel-title">Segmentation (Sessions)</div>
+            <div class="panel-title">Segmentation</div>
             <div class="row">
-               <button id="btnUseViewpoint" class="btn small">Seg current view</button>
+               <button id="btnUseViewpoint" class="btn small">View annotating</button>
+               <button id="btnMultiViewMerge" class="btn small primary">Merge to 3D</button>
             </div>
-            <button id="btnMultiViewMerge" class="btn small primary">Merge to 3D</button>
+            
               <label class="checkbox">
                 <input id="chkUseHolopart" type="checkbox" />
-                Use Holopart
+                Auto Fill (testing)
               </label>
             <div id="sceneList" class="list"></div>
           </div>

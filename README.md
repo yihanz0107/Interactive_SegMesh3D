@@ -48,14 +48,14 @@ npm run dev
 Note: If your GPU is on a remote server, simply forward the port to your local machine to use the web interface.
 
 
-## ⚠️ Limitations & Future Work
+## Future Work
 
-# Single Label Segmentation
+### Single Label Segmentation
 * The current version supports segmenting one label at a time.
 * Recommendation: If you need to segment multiple components simultaneously, we recommend Samesh, Samesh3, or PartField.
 * Roadmap: Multi-label compatibility will be added to the frontend in future updates.
 
-# Mesh Hole Filling
+### Mesh Hole Filling
 * Currently, we employ a basic hole-filling strategy.
 * Why not HoloPart? We experimented with HoloPart, but consistent with community discussions, it tends to disrupt the original mesh geometry even in non-holo places. To strictly preserve the original mesh structure, we opted for a simpler approach in this version.
 

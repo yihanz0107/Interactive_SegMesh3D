@@ -17,11 +17,13 @@ import pandas
 import random
 import colorsys
 
+_sysrand = random.SystemRandom()
+
 def get_random_pastel_color():
     """random (RGBA)"""
-    h = random.random()             
-    s = random.uniform(0.2, 0.7)    
-    v = random.uniform(0.2, 0.9)    
+    h = _sysrand.random()             
+    s = _sysrand.uniform(0.5, 1)    
+    v = _sysrand.uniform(0.8, 0.9)    
     r, g, b = colorsys.hsv_to_rgb(h, s, v)
     return [int(r*255), int(g*255), int(b*255), 255]
 
